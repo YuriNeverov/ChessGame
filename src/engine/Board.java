@@ -7,4 +7,6 @@ public interface Board {
     List<Move> getValidMoves();
 
     boolean doTurn(Move move);
+
+    Color turn();
 }
