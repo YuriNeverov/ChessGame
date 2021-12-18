@@ -10,6 +10,3 @@ enum ChessPiece {
     EMPTY
 }
 
-enum Color {
-    BLACK, WHITE
-}
