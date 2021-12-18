@@ -47,12 +47,15 @@ class MatrixBoard implements Board {
     }
 
     @Override
-    public Color getCellColor(Cell cell) {
+    public Color getPieceColor(Cell cell) {
+        if (getPiece(cell) == ChessPiece.EMPTY) {
+            return Color.NOCOLOR;
+        }
         return colors[cell.x][cell.y];
     }
 
     @Override
-    public ChessPiece getChessPiece(Cell cell) {
+    public ChessPiece getPiece(Cell cell) {
         return board[cell.x][cell.y];
     }
 
@@ -121,7 +124,7 @@ class MatrixBoard implements Board {
 
     @Override
     public List<Move> getValidMovesFrom(Cell cell) {
-        if (getCellColor(cell) != color) {
+        if (getPieceColor(cell) != color) {
             return new ArrayList<>();
         }
 
@@ -414,5 +417,16 @@ class MatrixBoard implements Board {
         to = new Cell(x - 1, y + (colors[x][y] == kingColor ? 1 : -1));
 
         return checkValidness(to, false) && board[to.x][to.y] == ChessPiece.PAWN && colors[to.x][to.y] != kingColor;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        for (int i = 0; i < BoardSize; i++) {
+            for (int j = 0; j < BoardSize; j++) {
+                hash = (hash + colors[i][j].getValue()) * board[i][j].getValue();
+            }
+        }
+        return hash;
     }
 }

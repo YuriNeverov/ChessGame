@@ -7,10 +7,10 @@ import java.util.List;
  * */
 public interface Board {
     /** функция возвращающая цвет клетки переданной в качестве аргумента */
-    Color getCellColor(Cell cell);
+    Color getPieceColor(Cell cell);
 
     /** функция возвращающая фигуру клетки переданной в качестве аргумента */
-    ChessPiece getChessPiece(Cell cell);
+    ChessPiece getPiece(Cell cell);
 
     /** проверка хода на адекватность */
     boolean isValidMove(Move move);
