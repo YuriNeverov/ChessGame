@@ -1,7 +1,5 @@
 package engine;
 
-import kotlin.Pair;
-
 public class Move {
     Cell from;
     Cell to;

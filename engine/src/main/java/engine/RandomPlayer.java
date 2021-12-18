@@ -15,7 +15,7 @@ public class RandomPlayer implements Player {
             return null;
         }
 
-        return moves.get(random.nextInt(0, moves.size()));
+        return moves.get(random.nextInt(moves.size()));
     }
 
     public static void main(String[] args) {

@@ -1,7 +1,5 @@
 package engine;
 
-import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +47,7 @@ class MatrixBoard implements Board {
                     Cell from = new Cell(x, y);
 
                     switch (board[x][y]) {
-                        case PAWN -> {
+                        case PAWN: {
                             Cell to = new Cell(x, y + (colors[x][y] == Color.WHITE ? 1 : -1));
 
                             if (checkValidness(to, false)) {
@@ -83,7 +81,7 @@ class MatrixBoard implements Board {
                             }
                         }
 
-                        case BISHOP -> {
+                        case BISHOP: {
                             for (int sign1 = -1; sign1 < 2; sign1 += 2) {
                                 for (int sign2 = -1; sign2 < 2; sign2 += 2) {
                                     for (int i = 0; i < 8; i++) {
@@ -102,7 +100,7 @@ class MatrixBoard implements Board {
                             }
                         }
 
-                        case KING -> {
+                        case KING: {
                             for (int i = -1; i < 2; i++) {
                                 for (int j = -1; j < 2; j++) {
                                     if (i == 0 && j == 0) {
@@ -118,7 +116,7 @@ class MatrixBoard implements Board {
                             }
                         }
 
-                        case KNIGHT -> {
+                        case KNIGHT: {
                             Cell to = new Cell(x + 1, y + 2);
 
                             if (checkValidness(to, false) || checkValidness(to, true)) {
@@ -167,7 +165,7 @@ class MatrixBoard implements Board {
                                 moves.add(new Move(from, to));
                             }
                         }
-                        case QUEEN -> {
+                        case QUEEN: {
                             for (int sign1 = -1; sign1 < 2; sign1 += 2) {
                                 for (int sign2 = -1; sign2 < 2; sign2 += 2) {
                                     for (int i = 0; i < 8; i++) {
@@ -203,7 +201,7 @@ class MatrixBoard implements Board {
                                 }
                             }
                         }
-                        case ROOK -> {
+                        case ROOK: {
                             for (int sign1 = -1; sign1 < 2; sign1++) {
                                 for (int sign2 = -1; sign2 < 2; sign2++) {
                                     if (sign1 == 0 ^ sign2 == 0) {
