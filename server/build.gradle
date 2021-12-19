@@ -20,7 +20,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.1'
-	runtimeOnly 'com.h2database:h2:2.0.202'
+	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
 }
 

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(
+@Table( name = "users",
         indexes = @Index(columnList = "creationTime"),
         uniqueConstraints = @UniqueConstraint(columnNames = "login")
 )
@@ -19,7 +19,15 @@ public class User {
 
     @NotNull
     @NotEmpty
+    private byte[] passwordSha;
+
+    @NotNull
+    @NotEmpty
     private String login;
+
+    @NotNull
+    @NotEmpty
+    private String name;
 
     @CreationTimestamp
     private Date creationTime;
@@ -56,5 +64,13 @@ public class User {
 
     public void setDisable(boolean disable) {
         this.disable = disable;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

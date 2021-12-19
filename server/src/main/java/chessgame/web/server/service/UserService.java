@@ -18,6 +18,7 @@ public class UserService {
     public User register(UserCredentials userCredentials) {
         User user = new User();
         user.setLogin(userCredentials.getLogin());
+        user.setName(userCredentials.getName());
         userRepository.save(user);
         userRepository.updatePasswordSha(user.getId(), userCredentials.getLogin(), userCredentials.getPassword());
         return user;
