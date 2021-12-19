@@ -39,7 +39,4 @@ public class UserService {
         return userRepository.findAllByOrderByIdDesc();
     }
 
-    public void setDisable(long id, boolean disable) {
-        userRepository.updateDisable(id, disable);
-    }
 }
