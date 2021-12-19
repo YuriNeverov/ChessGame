@@ -32,7 +32,7 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <#if user??>
-                    <li><a href="/users">Users</a></li>
+                    <li><a href="/create_game">Game</a></li>
                 </#if>
             </ul>
         </nav>

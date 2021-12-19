@@ -5,6 +5,7 @@ import chessgame.web.server.form.GameCredentials;
 import chessgame.web.server.form.validator.GameCredentialsCreateValidator;
 import chessgame.web.server.service.GameService;
 import chessgame.web.server.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+@Controller
 public class CreateGamePage extends Page {
     private final GameService gameService;
     private final UserService userService;
@@ -33,9 +35,9 @@ public class CreateGamePage extends Page {
     }
 
     @GetMapping("/create_game")
-    public String createGame(Model model, HttpSession httpSession) {
+    public String createGame(Model model) {
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("createGame", new GameCredentials());
+        model.addAttribute("gameForm", new GameCredentials());
         return "CreateGamePage";
     }
 
