@@ -9,7 +9,7 @@ public class UserCredentials {
     @NotNull
     @NotEmpty
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "[a-z]+", message = "Expected lowercase Latin letters")
+    @Pattern(regexp = "[a-z0-9]+", message = "Expected lowercase Latin letters or numbers")
     private String login;
 
     @NotNull
