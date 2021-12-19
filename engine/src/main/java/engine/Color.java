@@ -1,6 +1,6 @@
 package engine;
 
-enum Color {
+public enum Color {
     BLACK(1), WHITE(2), NOCOLOR(3);
 
     private final int value;
