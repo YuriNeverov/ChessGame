@@ -12,19 +12,20 @@
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/style.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/form.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/chess.css'/>">
+        <link rel="stylesheet" type="text/css" href="<@spring.url '/css/list.css'/>">
     </head>
     <body>
     <header>
         <a href="/"><img src="<@spring.url '/images/logo.png'/>" alt="Chess Game" title="Chess Game"/></a>
         <div class="enter-or-register-box">
             <#if user??>
-                ${user.login}
+                <a class="link">${user.login}</a>
                 |
-                <a href="/logout">Logout</a>
+                <a class="link" href="/logout">Logout</a>
             <#else>
-                <a href="/enter">Enter</a>
+                <a class="link" href="/enter">Enter</a>
                 |
-                <a href="/register">Register</a>
+                <a class="action-button, link" href="/register">Register</a>
             </#if>
         </div>
         <nav>
