@@ -1,4 +1,5 @@
 <#-- @ftlvariable name="user" type="chessgame.web.server.domain.User" -->
+
 <#import "/spring.ftl" as spring/>
 <#macro page>
     <!DOCTYPE html>
@@ -10,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/normalize.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/style.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/form.css'/>">
+        <link rel="stylesheet" type="text/css" href="<@spring.url '/css/chess.css'/>">
     </head>
     <body>
     <header>

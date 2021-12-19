@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
 :root {
     --black-color: #333;
     --border-color: var(--black-color);
@@ -6,8 +8,13 @@
     --error-color: red;
     --datatable-color: #FEEAD2;
     --dark-cell-color: #f8f8f8;
+    --form-background-color: white;
+    --primary-font-color: var(--black-color);
+    --primary-color: #6658d3;
+    --secondary-font-color: #8597a3;
     color: var(--black-color);
-    font-family: Verdana, sans-serif;
+    /*font-family: Verdana, sans-serif;*/
+    font-family: "DM Sans", sans-serif;
     font-size: 16px;
 }
 
@@ -42,6 +49,8 @@ header .enter-or-register-box {
 
 header nav {
     border-bottom: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
     padding: 0.75rem 0.25rem;
     margin-top: 1rem;
 }
@@ -58,7 +67,7 @@ header nav ul li {
 
 header nav ul li a {
     text-decoration: none;
-    color: var(--black-color);
+    color: var(--primary-font-color);
     font-family: "Arial Narrow", sans-serif;
     font-weight: bold;
     text-transform: uppercase;

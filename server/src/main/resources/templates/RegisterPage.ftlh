@@ -10,33 +10,22 @@
 </#macro>
 
 <@c.page>
-    <div class="register form-box">
-        <div class="header">Register</div>
-        <div class="body">
-            <form method="post" action="/register">
-                <input type="hidden" name="action" value="register">
-                <div class="field">
-                    <div class="name">
-                        <label for="login">Login</label>
-                    </div>
-                    <div class="value">
-                        <input id="login" name="login" value="${registerForm.login!}"/>
-                    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-image">
+            </div>
+            <form class="card-form" method="post" action="/register">
+                <div class="input">
+                    <input class="input-field" type="text" id="login" name="login" value="${registerForm.login!}" required/>
+                    <label class="input-label" for="login">Login</label>
                     <@error 'registerForm.login'/>
                 </div>
-
-                <div class="field">
-                    <div class="name">
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="value">
-                        <input id="password" type="password" name="password" value="${password!}"/>
-                    </div>
-                    <@error 'registerForm.password'/>
+                <div class="input">
+                    <input class="input-field" type="password" id="password" name="password" required/>
+                    <label class="input-label" for="password">Password</label>
                 </div>
-
-                <div class="button-field">
-                    <input type="submit" value="Register">
+                <div class="action">
+                    <button class="action-button">Register</button>
                 </div>
             </form>
         </div>
