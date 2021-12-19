@@ -3,14 +3,10 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatrixBoard implements Board {
+class MatrixBoard implements TestingBoard {
     private final int BoardSize = 8;
 
-    public Color color = Color.WHITE;
-
-    public Color turn() {
-        return color;
-    }
+    private Color color = Color.WHITE;
 
     private ChessPiece[][] board = new ChessPiece[BoardSize][BoardSize];
     private Color[][] colors = new Color[BoardSize][BoardSize];
@@ -137,9 +133,7 @@ public class MatrixBoard implements Board {
             case KNIGHT -> moves = getKnightValidMoves(cell);
             case QUEEN -> moves = getQueenValidMoves(cell);
             case ROOK -> moves = getRookValidMoves(cell);
-        };
-
-        Color kingColor = color;
+        }
 
         if (kingUnderAttack(kingColor)) {
             List<Move> checkedMoves = new ArrayList<>();
@@ -442,6 +436,83 @@ public class MatrixBoard implements Board {
         to = new Cell(x - 1, y + (colors[x][y] == kingColor ? 1 : -1));
 
         return checkValidness(kingCell, to, false) && board[to.x][to.y] == ChessPiece.PAWN && colors[to.x][to.y] != kingColor;
+    }
+
+    @Override
+    public void setCell(Cell cell, ChessPiece piece, Color color) {
+        board[cell.x][cell.y] = piece;
+        colors[cell.x][cell.y] = color;
+    }
+
+    @Override
+    public void setCurrentPlayer(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public void setWhiteKing(Cell cell) {
+        whiteKing = cell;
+    }
+
+    @Override
+    public void setBlackKing(Cell cell) {
+        blackKing = cell;
+    }
+
+    @Override
+    public Cell getWhiteKing() {
+        return whiteKing;
+    }
+
+    @Override
+    public Cell getBlackKing() {
+        return blackKing;
+    }
+
+    private String getBiChar(Cell cell) {
+        ChessPiece piece = getPiece(cell);
+        Color color = getPieceColor(cell);
+        if (color == Color.WHITE)
+            return switch (piece) {
+                case PAWN -> "WP";
+                case BISHOP -> "WB";
+                case KING -> "WK";
+                case KNIGHT -> "WN";
+                case QUEEN -> "WQ";
+                case ROOK -> "WR";
+                case EMPTY -> "00";
+            };
+        else
+            return switch (piece) {
+                case PAWN -> "BP";
+                case BISHOP -> "BB";
+                case KING -> "BK";
+                case KNIGHT -> "BN";
+                case QUEEN -> "BQ";
+                case ROOK -> "BR";
+                case EMPTY -> "00";
+            };
+    }
+
+    @Override
+    public String getState() {
+        StringBuilder strBuilder = new StringBuilder();
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                strBuilder.append(String.format("%s ", getBiChar(new Cell(y, 7 - x))));
+            }
+            strBuilder.append("\n");
+        }
+        strBuilder.append(String.format("White King: (%d, %d), Black King: (%d, %d)\n", whiteKing.x, whiteKing.y, blackKing.x, blackKing.y));
+        strBuilder.append(String.format("Current player color: %s\n", color == Color.WHITE ? "WHITE" : "BLACK"));
+        return strBuilder.toString();
+    }
+
+    @Override
+    public void clearPrevMove() {
+        prevMove = null;
+        prevMoveColor = null;
+        prevMovePiece = null;
     }
 
     @Override

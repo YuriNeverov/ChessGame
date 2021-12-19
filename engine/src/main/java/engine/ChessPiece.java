@@ -11,12 +11,25 @@ public enum ChessPiece {
 
     private final int value;
 
-    private ChessPiece(int value) {
+    ChessPiece(int value) {
         this.value = value;
     }
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case PAWN -> "PAWN";
+            case BISHOP -> "BISHOP";
+            case KING -> "KING";
+            case KNIGHT -> "KNIGHT";
+            case QUEEN -> "QUEEN";
+            case ROOK -> "ROOK";
+            case EMPTY -> "EMPTY";
+        };
     }
 }
 
