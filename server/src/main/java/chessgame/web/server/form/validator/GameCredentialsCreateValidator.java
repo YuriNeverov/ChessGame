@@ -1,6 +1,7 @@
 package chessgame.web.server.form.validator;
 
 import chessgame.web.server.form.GameCredentials;
+import chessgame.web.server.form.UserCredentials;
 import chessgame.web.server.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -14,15 +15,17 @@ public class GameCredentialsCreateValidator implements Validator {
         this.userService = userService;
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
-        return GameCredentials.class.equals(clazz);
+        return clazz.equals(GameCredentials.class);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         if (!errors.hasErrors()) {
             GameCredentials gameForm = (GameCredentials) target;
-            if (!userService.isLoginVacant(gameForm.getOpponentLogin())) {
-                errors.rejectValue("opponentLogin", "opponentLogin.user-is-not-exist", "user is not exist");
+            if (userService.isLoginVacant(gameForm.getOpponentLogin())) {
+                errors.rejectValue("opponentLogin", "opponentLogin.user-does-not-exist", "user does not exist");
             }
         }
     }
