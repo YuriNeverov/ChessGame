@@ -22,18 +22,18 @@ input {
     width: 100%;
     max-width: 425px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: 0 10px 20px 0 rgba(153, 153, 153, .25);
     padding: 0.75rem;
 }
 .card-image {
-    border-radius: 8px;
+    border-radius: var(--border-radius);;
     overflow: hidden;
-    padding-bottom: 50%;
-    background-image: url('../images/lelush.jpg');
+    padding-bottom: 35%;
+    background-image: url('../images/lelush.png');
     background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: 0 0;
+    background-size: 50%;
+    background-position: top center;
     position: relative;
 }
 .card-heading {

@@ -3,7 +3,7 @@
 :root {
     --black-color: #333;
     --border-color: var(--black-color);
-    --border-radius: 5px;
+    --border-radius: 8px;
     --caption-color: var(--black-color);
     --error-color: red;
     --datatable-color: #FEEAD2;
@@ -101,4 +101,9 @@ footer {
 .link {
     text-decoration: none;
     font-size: 24px;
+}
+
+aside {
+    float: right;
+    width: 20rem;
 }

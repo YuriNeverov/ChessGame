@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="user" type="chessgame.web.server.domain.User" -->
+
 <#import "/spring.ftl" as spring>
 <#import "./common.ftlh" as c>
 
@@ -10,7 +12,28 @@
 </#macro>
 
 <@c.page>
-    <div class="container">
+    <aside>
+        <div class="container">
+            <div class="table">
+                <div class="table-header">
+                    <div class="header__item"><a id="name" class="filter__link">Users</a></div>
+                </div>
+                <div class="table-content">
+                    <#list users as opponent>
+                        <div class="table-row">
+                            <div class="table-data">
+                                <a class="link">
+                                    ${opponent.login}
+                                </a>
+                            </div>
+                        </div>
+                    </#list>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="container" style="margin-right: 21rem">
         <div class="card">
             <div class="card-image">
             </div>
@@ -33,4 +56,11 @@
             </form>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function inviteAndScroll(opponent){
+            $("opponentLogin").text(opponent);
+            scrollUp();
+        }
+    </script>
 </@c.page>
