@@ -27,16 +27,6 @@
 
                 <div class="field">
                     <div class="name">
-                        <label for="name">Name</label>
-                    </div>
-                    <div class="value">
-                        <input id="name" name="name" value="${registerForm.name!}"/>
-                    </div>
-                    <@error 'registerForm.name'/>
-                </div>
-
-                <div class="field">
-                    <div class="name">
                         <label for="password">Password</label>
                     </div>
                     <div class="value">
