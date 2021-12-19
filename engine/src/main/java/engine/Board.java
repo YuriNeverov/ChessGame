@@ -22,7 +22,7 @@ public interface Board {
     boolean undoMove();
 
     /** возвращает историю всех ходов для данной доски */
-    List<Move> getAllMoves();
+    List<Move> getMovesHistory();
 
     /** проверка на шах игрока чей ход */
     boolean isCheck();
@@ -34,7 +34,7 @@ public interface Board {
     boolean isStalemate();
 
     /** возвращает список всех допустимых ходов для текущего игрока */
-    List<Move> getValidMoves();
+    List<Move> getAllValidMoves();
 
     /** возвращает список допустимых ходов для переданной как аргумент клетки */
     List<Move> getValidMovesFrom(Cell cell);
