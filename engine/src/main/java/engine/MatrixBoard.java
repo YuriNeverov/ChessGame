@@ -3,7 +3,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
-class MatrixBoard implements Board {
+public class MatrixBoard implements Board {
     private final int BoardSize = 8;
 
     public Color color = Color.WHITE;
@@ -18,11 +18,11 @@ class MatrixBoard implements Board {
     private Cell blackKing = new Cell(4, 7);
     private Cell whiteKing = new Cell(4, 0);
 
-    private Move prevMove = null;
+    private List<Move> prevMoves = new ArrayList<>();
 
-    private ChessPiece prevMovePiece = null;
+    private List<ChessPiece> prevMovePieces = new ArrayList<>();
 
-    private Color prevMoveColor = null;
+    private List<Color> prevMoveColor = new ArrayList<>();
 
     public MatrixBoard() {
         for (int i = 0; i < 2; i++) {
@@ -61,35 +61,39 @@ class MatrixBoard implements Board {
 
     @Override
     public boolean isValidMove(Move move) {
-        return getValidMoves().contains(move);
+        List<Move> validMoves = getValidMovesFrom(move.from);
+        return validMoves.contains(move);
     }
 
     @Override
     public boolean makeMove(Move move) {
         if (isValidMove(move)) {
-            if (board[move.from.x][move.from.y] == ChessPiece.KING) {
-                if (colors[move.from.x][move.from.y] == Color.WHITE) {
-                    whiteKing = move.to;
-                } else {
-                    blackKing = move.to;
-                }
-            }
-            prevMove = move;
-            prevMovePiece = board[move.to.x][move.to.y];
-            prevMoveColor = colors[move.to.x][move.to.y];
-            board[move.to.x][move.to.y] = board[move.from.x][move.from.y];
-            board[move.from.x][move.from.y] = ChessPiece.EMPTY;
-            colors[move.to.x][move.to.y] = colors[move.from.x][move.from.y];
-            colors[move.from.x][move.from.y] = ((move.from.x + move.from.y) % 2 == 0 ? Color.WHITE : Color.BLACK);
-            if (color == Color.WHITE) {
-                color = Color.BLACK;
-            } else {
-                color = Color.WHITE;
-            }
-            return true;
+           makeMoveWithoutCheck(move);
+           return true;
         }
-
         return false;
+    }
+
+    private void makeMoveWithoutCheck(Move move) {
+        if (board[move.from.x][move.from.y] == ChessPiece.KING) {
+            if (colors[move.from.x][move.from.y] == Color.WHITE) {
+                whiteKing = move.to;
+            } else {
+                blackKing = move.to;
+            }
+        }
+        prevMoves.add(move);
+        prevMovePieces.add(board[move.to.x][move.to.y]);
+        prevMoveColor.add(colors[move.to.x][move.to.y]);
+        board[move.to.x][move.to.y] = board[move.from.x][move.from.y];
+        board[move.from.x][move.from.y] = ChessPiece.EMPTY;
+        colors[move.to.x][move.to.y] = colors[move.from.x][move.from.y];
+        colors[move.from.x][move.from.y] = ((move.from.x + move.from.y) % 2 == 0 ? Color.WHITE : Color.BLACK);
+        if (color == Color.WHITE) {
+            color = Color.BLACK;
+        } else {
+            color = Color.WHITE;
+        }
     }
 
     @Override
@@ -145,7 +149,7 @@ class MatrixBoard implements Board {
             List<Move> checkedMoves = new ArrayList<>();
 
             for (Move move: moves) {
-                makeMove(move);
+                makeMoveWithoutCheck(move);
                 if (!kingUnderAttack(color)) {
                     checkedMoves.add(move);
                 }
@@ -350,12 +354,23 @@ class MatrixBoard implements Board {
                         (canBeat && board[cell.x][cell.y] != ChessPiece.EMPTY && colors[cell.x][cell.y] != color));
     }
 
-    private void undoMove() {
-        if (prevMove == null) {
-            return;
+    public boolean undoMove() {
+        if (prevMoves.isEmpty()) {
+            return false;
         }
 
-        Cell from = prevMove.from, to = prevMove.to;
+        int last = prevMoves.size() - 1;
+
+        Move move = prevMoves.get(last);
+        prevMoves.remove(last);
+
+        ChessPiece piece = prevMovePieces.get(last);
+        prevMovePieces.remove(last);
+
+        Color color = prevMoveColor.get(last);
+        prevMoveColor.remove(last);
+
+        Cell from = move.from, to = move.to;
 
         if (board[to.x][to.y] == ChessPiece.KING) {
             if (colors[to.x][to.y] == Color.WHITE) {
@@ -367,9 +382,15 @@ class MatrixBoard implements Board {
 
         board[from.x][from.y] = board[to.x][to.y];
         colors[from.x][from.y] = colors[to.x][to.y];
-        board[to.x][to.y] = prevMovePiece;
-        colors[to.x][to.y] = prevMoveColor;
-        prevMove = null;
+        board[to.x][to.y] = piece;
+        colors[to.x][to.y] = color;
+
+        return true;
+    }
+
+    @Override
+    public List<Move> getAllMoves() {
+        return prevMoves;
     }
 
     private boolean kingUnderAttack(Color kingColor) {
