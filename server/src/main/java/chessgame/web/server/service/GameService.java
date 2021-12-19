@@ -25,4 +25,8 @@ public class GameService {
         gameRepository.save(game);
         return game;
     }
+
+    public Game findById(Long id) {
+        return id == null ? null : gameRepository.findById(id).orElse(null);
+    }
 }
