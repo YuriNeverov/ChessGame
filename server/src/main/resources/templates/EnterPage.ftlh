@@ -10,34 +10,27 @@
 </#macro>
 
 <@c.page>
-<div class="enter form-box">
-    <div class="header">Enter</div>
-    <div class="body">
-        <form method="post" action="/enter">
-            <div class="field">
-                <div class="name">
-                    <label for="login">Login</label>
-                </div>
-                <div class="value">
-                    <input id="login" name="login" value="${enterForm.login!}"/>
-                </div>
+<div class="container">
+    <div class="card">
+        <div class="card-image">
+        </div>
+        <form class="card-form" method="post" action="/enter">
+            <div class="input">
+                <input class="input-field" type="text" id="login" name="login" value="${enterForm.login!}" required/>
+                <label class="input-label" for="login">Login</label>
                 <@error 'enterForm.login'/>
             </div>
-
-            <div class="field">
-                <div class="name">
-                    <label for="password">Password</label>
-                </div>
-                <div class="value">
-                    <input id="password" type="password" name="password"/>
-                </div>
-                <@error 'enterForm.password'/>
+            <div class="input">
+                <input class="input-field" type="password" id="password" name="password" required/>
+                <label class="input-label" for="password">Password</label>
             </div>
-
-            <div class="button-field">
-                <input type="submit" value="Enter">
+            <div class="action">
+                <button class="action-button">Enter</button>
             </div>
         </form>
+        <div class="card-info">
+            <p><a href="/register">Register</a> if you don't have an account</p>
+        </div>
     </div>
 </div>
 </@c.page>
