@@ -21,10 +21,6 @@ public class User {
     @NotEmpty
     private String login;
 
-    @NotNull
-    @NotEmpty
-    private String name;
-
     @CreationTimestamp
     private Date creationTime;
 
@@ -62,11 +58,4 @@ public class User {
         this.disable = disable;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

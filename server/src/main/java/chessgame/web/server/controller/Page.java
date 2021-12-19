@@ -1,5 +1,6 @@
 package chessgame.web.server.controller;
 
+import chessgame.web.server.domain.Game;
 import chessgame.web.server.domain.User;
 import chessgame.web.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class Page {
 
     void unsetUser(HttpSession httpSession) {
         httpSession.removeAttribute(USER_ID_SESSION_KEY);
+    }
+
+    void setGame(HttpSession httpSession, Game game) {
+
     }
 
     void putMessage(HttpSession httpSession, String message) {
