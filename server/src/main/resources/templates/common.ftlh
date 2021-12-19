@@ -7,12 +7,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Chess game</title>
+        <script type="text/javascript" src="<@spring.url '/js/chess.js'/>"></script>
+
         <link rel="icon" type="image/png" sizes="32x32" href="<@spring.url '/images/favicon.png'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/normalize.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/style.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/form.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/chess.css'/>">
         <link rel="stylesheet" type="text/css" href="<@spring.url '/css/list.css'/>">
+        <link rel="stylesheet" type="text/css" href="<@spring.url '/css/table.css'/>">
     </head>
     <body>
     <header>
