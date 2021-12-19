@@ -46,6 +46,7 @@ public class RegisterPage extends Page {
         }
 
         setUser(httpSession, userService.register(registerForm));
+        putMessage(httpSession, "Congrats, you have been registered!");
 
         return "redirect:/";
     }

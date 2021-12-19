@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table( name = "users",
+@Table(name = "users",
         indexes = @Index(columnList = "creationTime"),
         uniqueConstraints = @UniqueConstraint(columnNames = "login")
 )
@@ -16,10 +16,6 @@ public class User {
     @Id
     @GeneratedValue
     private long id;
-
-    @NotNull
-    @NotEmpty
-    private byte[] passwordSha;
 
     @NotNull
     @NotEmpty

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 public class Page {
     private static final String USER_ID_SESSION_KEY = "userId";
+    private static final String MESSAGE_SESSION_KEY = "message";
 
     @Autowired
     private UserService userService;
@@ -28,5 +29,9 @@ public class Page {
 
     void unsetUser(HttpSession httpSession) {
         httpSession.removeAttribute(USER_ID_SESSION_KEY);
+    }
+
+    void putMessage(HttpSession httpSession, String message) {
+        httpSession.setAttribute(MESSAGE_SESSION_KEY, message);
     }
 }
