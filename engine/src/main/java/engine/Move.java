@@ -9,6 +9,14 @@ public class Move {
         this.to = to;
     }
 
+    public Cell getFrom() {
+        return from;
+    }
+
+    public Cell getTo() {
+        return to;
+    }
+
     @Override
     public String toString() {
         return "[" + from.toString() + ", " + to.toString() + "]";
