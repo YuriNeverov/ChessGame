@@ -25,8 +25,6 @@ public class UserCredentialsEnterValidator implements Validator {
             User user = userService.findByLoginAndPassword(enterForm.getLogin(), enterForm.getPassword());
             if (user == null) {
                 errors.rejectValue("password", "password.invalid-login-or-password", "invalid login or password");
-            } else if (user.isDisable()) {
-                errors.rejectValue("login", "login.user-is-disabled", "user is disabled");
             }
         }
     }

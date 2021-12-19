@@ -29,7 +29,7 @@ public class CreateGamePage extends Page {
         this.gameCredentialsCreateValidator = gameCredentialsCreateValidator;
     }
 
-    @InitBinder
+    @InitBinder("gameForm")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(gameCredentialsCreateValidator);
     }

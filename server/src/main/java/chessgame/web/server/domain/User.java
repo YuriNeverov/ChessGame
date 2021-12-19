@@ -8,7 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "users",
+@Table(
+        name = "users",
         indexes = @Index(columnList = "creationTime"),
         uniqueConstraints = @UniqueConstraint(columnNames = "login")
 )
@@ -23,8 +24,6 @@ public class User {
 
     @CreationTimestamp
     private Date creationTime;
-
-    private boolean disable = false;
 
     public long getId() {
         return id;
@@ -48,14 +47,6 @@ public class User {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
-    }
-
-    public boolean isDisable() {
-        return disable;
-    }
-
-    public void setDisable(boolean disable) {
-        this.disable = disable;
     }
 
 }
