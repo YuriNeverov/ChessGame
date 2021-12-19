@@ -14,11 +14,6 @@ public class UserCredentials {
 
     @NotNull
     @NotEmpty
-    @Size(min = 2, max = 30)
-    private String name;
-
-    @NotNull
-    @NotEmpty
     @Size(min = 1, max = 60)
     private String password;
 
@@ -38,11 +33,4 @@ public class UserCredentials {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
