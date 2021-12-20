@@ -30,7 +30,7 @@ input {
     border-radius: var(--border-radius);;
     overflow: hidden;
     padding-bottom: 35%;
-    background-image: url('../images/lelush.png');
+    background-image: url('../img/lelush.png');
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: top center;

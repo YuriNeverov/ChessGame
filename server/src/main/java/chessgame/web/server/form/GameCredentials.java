@@ -8,7 +8,7 @@ public class GameCredentials {
     @NotEmpty
     private String opponentLogin;
 
-    private boolean isWhiteColor;
+    private int isWhiteColor;
 
     public String getOpponentLogin() {
         return opponentLogin;
@@ -19,10 +19,10 @@ public class GameCredentials {
     }
 
     public boolean isWhiteColor() {
-        return isWhiteColor;
+        return isWhiteColor == 0;
     }
 
     public void setWhiteColor(boolean whiteColor) {
-        this.isWhiteColor = whiteColor;
+        this.isWhiteColor = whiteColor ? 1 : 0;
     }
 }
