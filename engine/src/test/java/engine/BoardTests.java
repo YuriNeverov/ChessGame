@@ -7,15 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static java.lang.Math.abs;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTests {
     TestingBoard board;
 
     @BeforeEach
     void init() {
-        board = new MatrixBoard();
+        board = new TestingMatrixBoard();
     }
 
     @Test
@@ -64,27 +64,44 @@ public class BoardTests {
         assertEquals(ChessPiece.KING, board.getPiece(new Cell(4, 7)));
     }
 
-    boolean isInWorld(Cell cell) {
+    boolean isOnBoard(Cell cell) {
         return 0 <= cell.x && cell.x < 8 && 0 <= cell.y && cell.y < 8;
     }
 
+    boolean isOnBoard(int x, int y) {
+        return 0 <= x && x < 8 && 0 <= y && y < 8;
+    }
+
     void assertMove(ChessPiece pieceFrom, Cell cellFrom, Color colorFrom,
-                    ChessPiece pieceTo, Cell cellTo, Color colorTo, boolean shouldHappen
+                    ChessPiece pieceTo, Cell cellTo, Color colorTo,
+                    boolean shouldHappen
     ) {
-        String message = String.format("piece %s from (i: %d, j: %d) color %s to piece %s in (x: %d, y: %d) color %s, should %s have been moved",
-                pieceFrom.toString(), cellFrom.x, cellFrom.y, colorFrom == Color.WHITE ? "WHITE" : "BLACK", pieceTo.toString(),
-                cellTo.x, cellTo.y, colorFrom == Color.WHITE ? "WHITE" : "BLACK", shouldHappen ? "" : "not");
+        String message = String.format(
+            """
+            State:
+            %s
+            piece %s from (%d, %d) color %s to
+            piece %s in (%d, %d) color %s,
+            should %s have been moved""",
+            board.getState(),
+            pieceFrom, cellFrom.x, cellFrom.y, colorFrom,
+            pieceTo, cellTo.x, cellTo.y, colorFrom,
+            shouldHappen ? "" : "not"
+        );
         if (shouldHappen) {
             assertEquals(ChessPiece.EMPTY, board.getPiece(cellFrom), message);
-            assertEquals(pieceFrom, board.getPiece(cellTo), message);
-
+            if (pieceFrom == ChessPiece.PAWN && (cellTo.y == 0 || cellTo.y == 7)) {
+                assertEquals(ChessPiece.QUEEN, board.getPiece(cellTo), message);
+            } else {
+                assertEquals(pieceFrom, board.getPiece(cellTo), message);
+            }
             assertEquals(Color.NOCOLOR, board.getPieceColor(cellFrom), message);
             assertEquals(colorFrom, board.getPieceColor(cellTo), message);
         } else {
             assertEquals(pieceFrom, board.getPiece(cellFrom), message);
             assertEquals(colorFrom, board.getPieceColor(cellFrom), message);
 
-            if (isInWorld(cellTo)) {
+            if (isOnBoard(cellTo)) {
                 assertEquals(pieceTo, board.getPiece(cellTo), message);
                 assertEquals(colorTo, board.getPieceColor(cellTo), message);
             }
@@ -138,14 +155,24 @@ public class BoardTests {
         ChessPiece otherPiece = ChessPiece.PAWN;
         Color otherColor = color == Color.WHITE ? Color.BLACK : Color.WHITE;
         placeKings(from, to, color);
+        String format = """
+            State:
+            %s
+            Piece %s colored %s tries to move from (%d, %d) to (%d, %d),
+            into free cell should %s move,
+            into enemy cell should %s.""";
 
         board.clearPrevMove();
         board.setCurrentPlayer(color);
-        board.setCell(from, piece, color);
         board.setCell(to, ChessPiece.EMPTY, Color.NOCOLOR);
-        String message = String.format("State: \n%s\nPiece %s colored %s tries to move from (i: %d, j: %d) to (x: %d, y: %d), into free should %s move, into enemy should %s.",
-                board.getState(),
-                piece, color == Color.WHITE ? "WHITE" : "BLACK", from.x, from.y, to.x, to.y, free ? "" : "not", enemy ? "" : "not");
+        board.setCell(from, piece, color);
+        String message = String.format(
+            format,
+            board.getState(),
+            piece, color, from.x, from.y, to.x, to.y,
+            free ? "" : "not",
+            enemy ? "" : "not"
+        );
         assertEquals(free, board.isValidMove(new Move(from, to)), message);
         assertEquals(free, board.makeMove(new Move(from, to)), message);
         assertMove(piece, from, color, ChessPiece.EMPTY, to, Color.NOCOLOR, free);
@@ -156,9 +183,13 @@ public class BoardTests {
         board.setCurrentPlayer(color);
         board.setCell(from, piece, color);
         board.setCell(to, otherPiece, color);
-        message = String.format("State: \n%s\nPiece %s colored %s tries to move from (i: %d, j: %d) to (x: %d, y: %d), into free should %s move, into enemy should %s.",
-                board.getState(),
-                piece, color == Color.WHITE ? "WHITE" : "BLACK", from.x, from.y, to.x, to.y, free ? "" : "not", enemy ? "" : "not");
+        message = String.format(
+            format,
+            board.getState(),
+            piece, color, from.x, from.y, to.x, to.y,
+            free ? "" : "not",
+            enemy ? "" : "not"
+        );
         assertFalse(board.isValidMove(new Move(from, to)), message);
         assertFalse(board.makeMove(new Move(from, to)), message);
         assertMove(piece, from, color, otherPiece, to, color, false);
@@ -168,9 +199,14 @@ public class BoardTests {
         board.clearPrevMove();
         board.setCurrentPlayer(color);
         board.setCell(from, piece, color);
-        message = String.format("State: \n%s\nPiece %s colored %s tries to move from (i: %d, j: %d) to (x: %d, y: %d), into free should %s move, into enemy should %s.",
-                board.getState(),
-                piece, color == Color.WHITE ? "WHITE" : "BLACK", from.x, from.y, to.x, to.y, free ? "" : "not", enemy ? "" : "not");
+        board.setCell(to, otherPiece, otherColor);
+        message = String.format(
+            format,
+            board.getState(),
+            piece, color, from.x, from.y, to.x, to.y,
+            free ? "" : "not",
+            enemy ? "" : "not"
+        );
         assertEquals(enemy, board.isValidMove(new Move(from, to)), message);
         assertEquals(enemy, board.makeMove(new Move(from, to)), message);
         assertMove(piece, from, color, otherPiece, to, otherColor, enemy);
@@ -183,32 +219,223 @@ public class BoardTests {
 
     @Test
     void pawnTest() {
-        board = new MatrixBoard();
-        Color color = Color.WHITE;
-        int direction = 1;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board.setCell(new Cell(i, j), ChessPiece.EMPTY, Color.NOCOLOR);
-            }
-        }
+        board.clear();
         for (int i = 0; i < 8; i++) {
             for (int j = 1; j < 8; j++) {
-                for (int x = 0; x < 8; x++) {
-                    for (int y = 1; y < 8; y++) {
+                for (int x = -1; x < 9; x++) {
+                    for (int y = -1; y < 9; y++) {
                         if (x == i && y == j) continue;
-                        boolean free = false;
-                        boolean enemy = false;
-                        if (j == 1 && y == j + 2 || y == j + 1) {
-                            free = true;
+                        for (Color color : List.of(Color.WHITE, Color.BLACK)) {
+                            int direction = color == Color.WHITE ? 1 : -1;
+                            boolean free = false;
+                            boolean enemy = false;
+                            if (
+                                isOnBoard(x, y) &&
+                                (j == (direction + 7) % 7 && y == j + 2 * direction || y == j + direction) &&
+                                x == i
+                            ) {
+                                free = true;
+                            }
+                            if (
+                                isOnBoard(x, y) &&
+                                y == j + direction &&
+                                (x == i - 1 || x == i + 1)
+                            ) {
+                                enemy = true;
+                            }
+                            testMove(ChessPiece.PAWN, color, new Cell(i, j), new Cell(x, y), free, enemy);
                         }
-                        if (y == i + 1 && (x == i - 1 || x == i + 1)) {
-                            enemy = true;
-                        }
-                        testMove(ChessPiece.PAWN, color, new Cell(i, j), new Cell(x, y), free, enemy);
                     }
                 }
             }
         }
     }
 
+    @Test
+    void rookTest() {
+        board.clear();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int x = -1; x < 9; x++) {
+                    for (int y = -1; y < 9; y++) {
+                        if (x == i && y == j) continue;
+                        for (Color color : List.of(Color.WHITE, Color.BLACK)) {
+                            boolean free = false;
+                            boolean enemy = false;
+                            if (isOnBoard(x, y) && (x == i || y == j)) {
+                                free = true;
+                                enemy = true;
+                            }
+                            testMove(ChessPiece.ROOK, color, new Cell(i, j), new Cell(x, y), free, enemy);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    void knightTest() {
+        board.clear();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int x = -1; x < 9; x++) {
+                    for (int y = -1; y < 9; y++) {
+                        if (x == i && y == j) continue;
+                        for (Color color : List.of(Color.WHITE, Color.BLACK)) {
+                            boolean free = false;
+                            boolean enemy = false;
+                            int deltaY = abs(y - j), deltaX = abs(x - i);
+                            if (isOnBoard(x, y) && (deltaX == 1 || deltaY == 1) && deltaX + deltaY == 3) {
+                                free = true;
+                                enemy = true;
+                            }
+                            testMove(ChessPiece.KNIGHT, color, new Cell(i, j), new Cell(x, y), free, enemy);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    void bishopTest() {
+        board.clear();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int x = -1; x < 9; x++) {
+                    for (int y = -1; y < 9; y++) {
+                        if (x == i && y == j) continue;
+                        for (Color color : List.of(Color.WHITE, Color.BLACK)) {
+                            boolean free = false;
+                            boolean enemy = false;
+                            if (isOnBoard(x, y) && (x - i == y - j || x - i == j - y)) {
+                                free = true;
+                                enemy = true;
+                            }
+                            testMove(ChessPiece.BISHOP, color, new Cell(i, j), new Cell(x, y), free, enemy);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    void queenTest() {
+        board.clear();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int x = -1; x < 9; x++) {
+                    for (int y = -1; y < 9; y++) {
+                        if (x == i && y == j) continue;
+                        for (Color color : List.of(Color.WHITE, Color.BLACK)) {
+                            boolean free = false;
+                            boolean enemy = false;
+                            if (isOnBoard(x, y) && (x - i == y - j || x - i == j - y || x == i || y == j)) {
+                                free = true;
+                                enemy = true;
+                            }
+                            testMove(ChessPiece.QUEEN, color, new Cell(i, j), new Cell(x, y), free, enemy);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    void movesHistoryTest() {
+        List<Move> moves = List.of(
+            new Move(new Cell(4, 1), new Cell(4, 2)),
+            new Move(new Cell(3, 6), new Cell(3, 4)),
+            new Move(new Cell(3, 0), new Cell(6, 3)),
+            new Move(new Cell(2, 7), new Cell(6, 3))
+        );
+        for (Move move : moves) {
+            assertTrue(board.makeMove(move));
+        }
+        assertEquals(moves, board.getMovesHistory());
+    }
+
+    @Test
+    void undoMoveTest() {
+        assertFalse(board.undoMove());
+        List<Move> moves = List.of(
+            new Move(new Cell(4, 1), new Cell(4, 2)),
+            new Move(new Cell(3, 6), new Cell(3, 4)),
+            new Move(new Cell(3, 0), new Cell(6, 3)),
+            new Move(new Cell(2, 7), new Cell(6, 3))
+        );
+        List<Move> moves_undone = List.of(
+            new Move(new Cell(4, 1), new Cell(4, 2)),
+            new Move(new Cell(3, 6), new Cell(3, 4))
+        );
+        for (Move move : moves) {
+            assertTrue(board.makeMove(move));
+        }
+        assertEquals(moves, board.getMovesHistory());
+        assertTrue(board.undoMove());
+        assertTrue(board.undoMove());
+        assertEquals(moves_undone, board.getMovesHistory());
+    }
+
+    @Test
+    void playerColorTest() {
+        List<Move> moves = List.of(
+            new Move(new Cell(4, 1), new Cell(4, 2)),
+            new Move(new Cell(3, 6), new Cell(3, 4)),
+            new Move(new Cell(3, 0), new Cell(6, 3)),
+            new Move(new Cell(2, 7), new Cell(6, 3))
+        );
+        Color current = Color.WHITE;
+        assertEquals(Color.WHITE, board.getCurrentPlayerColor());
+        for (Move move : moves) {
+            assertTrue(board.makeMove(move));
+            current = current == Color.WHITE ? Color.BLACK : Color.WHITE;
+            assertEquals(current, board.getCurrentPlayerColor());
+        }
+    }
+
+    @Test
+    void isCheckTest() {
+        assertFalse(board.isCheck());
+        board.clear();
+        board.setWhiteKing(new Cell(0, 0));
+        board.setBlackKing(new Cell(7, 7));
+        board.setCell(board.getWhiteKing(), ChessPiece.KING, Color.WHITE);
+        board.setCell(board.getBlackKing(), ChessPiece.KING, Color.BLACK);
+        board.setCell(new Cell(2, 2), ChessPiece.BISHOP, Color.BLACK);
+        board.setCurrentPlayer(Color.WHITE);
+        assertTrue(board.isCheck(), String.format("State: \n%s", board.getState()));
+    }
+
+    @Test
+    void isStalemateTest() {
+        assertFalse(board.isStalemate());
+        board.clear();
+        board.setWhiteKing(new Cell(0, 0));
+        board.setBlackKing(new Cell(7, 7));
+        board.setCell(board.getWhiteKing(), ChessPiece.KING, Color.WHITE);
+        board.setCell(board.getBlackKing(), ChessPiece.KING, Color.BLACK);
+        board.setCell(new Cell(1, 2), ChessPiece.ROOK, Color.BLACK);
+        board.setCell(new Cell(2, 1), ChessPiece.ROOK, Color.BLACK);
+        board.setCurrentPlayer(Color.WHITE);
+        assertTrue(board.isStalemate(), String.format("State: \n%s", board.getState()));
+    }
+
+    @Test
+    void isCheckmateTest() {
+        assertFalse(board.isCheckmate());
+        board.clear();
+        board.setWhiteKing(new Cell(0, 0));
+        board.setBlackKing(new Cell(7, 7));
+        board.setCell(board.getWhiteKing(), ChessPiece.KING, Color.WHITE);
+        board.setCell(board.getBlackKing(), ChessPiece.KING, Color.BLACK);
+        board.setCell(new Cell(1, 2), ChessPiece.ROOK, Color.BLACK);
+        board.setCell(new Cell(2, 1), ChessPiece.ROOK, Color.BLACK);
+        board.setCell(new Cell(3, 3), ChessPiece.BISHOP, Color.BLACK);
+        board.setCurrentPlayer(Color.WHITE);
+        assertTrue(board.isCheckmate(), String.format("State: \n%s", board.getState()));
+    }
 }

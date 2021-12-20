@@ -12,4 +12,13 @@ public enum Color {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case BLACK -> "BLACK";
+            case WHITE -> "WHITE";
+            case NOCOLOR -> "NOCOLOR";
+        };
+    }
 }

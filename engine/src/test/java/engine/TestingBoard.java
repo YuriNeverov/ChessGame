@@ -16,4 +16,6 @@ public interface TestingBoard extends Board {
     String getState();
 
     void clearPrevMove();
+
+    void clear();
 }
