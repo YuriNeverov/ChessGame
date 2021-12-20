@@ -1,7 +1,6 @@
 package chessgame.web.server.form.validator;
 
 import chessgame.web.server.form.GameCredentials;
-import chessgame.web.server.form.UserCredentials;
 import chessgame.web.server.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
