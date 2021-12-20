@@ -1,4 +1,0 @@
-rootProject.name = 'server'
-
-include ':engine'
-project(':engine').projectDir = new File('../engine')

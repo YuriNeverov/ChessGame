@@ -1,0 +1,4 @@
+rootProject.name = "ai"
+
+include ':engine'
+project(':engine').projectDir = new File('../engine')
