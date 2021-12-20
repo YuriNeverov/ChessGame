@@ -20,6 +20,7 @@
                 </div>
                 <div class="table-content">
                     <#list users as opponent>
+                        <#if opponent.login != user.login>
                         <div class="table-row">
                             <div class="table-data">
                                 <a class="link">
@@ -27,6 +28,7 @@
                                 </a>
                             </div>
                         </div>
+                        </#if>
                     </#list>
                 </div>
             </div>
@@ -45,8 +47,8 @@
                 </div>
                 <div class="input">
                     <select class="input-field" type="isWhiteColor" id="isWhiteColor" name="isWhiteColor" >
-                        <option value=true>White</option>
-                        <option value=false>Black</option>
+                        <option value=1>White</option>
+                        <option value=0>Black</option>
                     </select>
                     <label class="input-label" for="isWhiteColor">Choose your side</label>
                 </div>
