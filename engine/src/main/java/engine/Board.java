@@ -15,8 +15,14 @@ public interface Board {
     /** проверка хода на адекватность */
     boolean isValidMove(Move move);
 
-    /** доска пытается сделать ход и возвращает релузьтат своей тщетной попытки*/
+    /** доска пытается сделать ход и возвращает релузьтат своей тщетной попытки */
     boolean makeMove(Move move);
+
+    /** доска пытается отменить ход и возвращает релузьтат своей тщетной попытки */
+    boolean undoMove();
+
+    /** возвращает историю всех ходов для данной доски */
+    List<Move> getMovesHistory();
 
     /** проверка на шах игрока чей ход */
     boolean isCheck();
@@ -28,7 +34,7 @@ public interface Board {
     boolean isStalemate();
 
     /** возвращает список всех допустимых ходов для текущего игрока */
-    List<Move> getValidMoves();
+    List<Move> getAllValidMoves();
 
     /** возвращает список допустимых ходов для переданной как аргумент клетки */
     List<Move> getValidMovesFrom(Cell cell);
