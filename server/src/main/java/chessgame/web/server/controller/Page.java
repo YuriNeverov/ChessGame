@@ -85,6 +85,7 @@ public class Page {
             FEN.append('/');
         }
         FEN.deleteCharAt(FEN.length() - 1);
+        FEN.append(" ").append(board.getCurrentPlayerColor() == Color.WHITE ? 'w' : 'b').append(" - - 0 0");
         return FEN.toString();
     }
 
