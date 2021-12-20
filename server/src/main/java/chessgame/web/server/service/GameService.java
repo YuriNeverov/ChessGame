@@ -27,6 +27,10 @@ public class GameService {
             game.setLoginWhite(gameCredentials.getOpponentLogin());
             game.setLoginBlack(userLogin);
         }
+        if (gameCredentials.isGameWithAI()) {
+            game.setGameWithAI(true);
+            game.setAccepted(true);
+        }
         gameRepository.save(game);
         return game;
     }
