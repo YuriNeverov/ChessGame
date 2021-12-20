@@ -23,25 +23,25 @@ public class Move {
 
     @NotNull
     @NotEmpty
-    private long xFrom;
+    private int xFrom;
 
     @NotNull
     @NotEmpty
-    private long yFrom;
+    private int yFrom;
 
     @NotNull
     @NotEmpty
-    private long xTo;
+    private int xTo;
 
     @NotNull
     @NotEmpty
-    private long yTo;
+    private int yTo;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -61,35 +61,35 @@ public class Move {
         this.moveNumber = moveNumber;
     }
 
-    public long getXFrom() {
+    public int getXFrom() {
         return xFrom;
     }
 
-    public void setXFrom(long xFrom) {
+    public void setXFrom(int xFrom) {
         this.xFrom = xFrom;
     }
 
-    public long getYFrom() {
+    public int getYFrom() {
         return yFrom;
     }
 
-    public void setYFrom(long yFrom) {
+    public void setYFrom(int yFrom) {
         this.yFrom = yFrom;
     }
 
-    public long getXTo() {
+    public int getXTo() {
         return xTo;
     }
 
-    public void setXTo(long xTo) {
+    public void setXTo(int xTo) {
         this.xTo = xTo;
     }
 
-    public long getYTo() {
+    public int getYTo() {
         return yTo;
     }
 
-    public void setYTo(long yTo) {
+    public void setYTo(int yTo) {
         this.yTo = yTo;
     }
 }

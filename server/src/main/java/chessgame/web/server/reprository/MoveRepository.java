@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MoveRepository extends JpaRepository<Move, Long> {
 
-    @Query(value = "SELECT * FROM move WHERE game_id=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM move WHERE game_id=?1 ORDER BY move_number ASC", nativeQuery = true)
     List<Move> findAllMovesByGameId(long gameId);
 }
