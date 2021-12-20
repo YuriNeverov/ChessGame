@@ -149,11 +149,13 @@ public class MatrixBoard implements Board {
         List<Move> checkedMoves = new ArrayList<>();
 
         for (Move move : moves) {
+            ChessPiece safePiece = board[move.from.x][move.from.y];
             makeMoveWithoutCheck(move);
             if (!kingUnderAttack(kingColor)) {
                 checkedMoves.add(move);
             }
             undoMove();
+            board[move.from.x][move.from.y] = safePiece;
         }
 
         moves = checkedMoves;

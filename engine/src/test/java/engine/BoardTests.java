@@ -173,8 +173,12 @@ public class BoardTests {
             free ? "" : "not",
             enemy ? "" : "not"
         );
+        if (from.x == 0 && from.y == 1 && to.x == -1 && to.y == -1) {
+            System.out.println("sosi");
+        }
         assertEquals(free, board.isValidMove(new Move(from, to)), message);
-        assertEquals(free, board.makeMove(new Move(from, to)), message);
+        boolean aa = board.makeMove(new Move(from, to));
+        assertEquals(free, aa, message);
         assertMove(piece, from, color, ChessPiece.EMPTY, to, Color.NOCOLOR, free);
         board.setCell(to, ChessPiece.EMPTY, Color.NOCOLOR);
         board.setCell(from, ChessPiece.EMPTY, Color.NOCOLOR);
