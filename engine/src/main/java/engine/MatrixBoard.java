@@ -3,26 +3,22 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatrixBoard implements Board {
-    private final int BoardSize = 8;
+class MatrixBoard implements Board {
+    protected final int BoardSize = 8;
 
-    public Color color = Color.WHITE;
+    protected Color color = Color.WHITE;
 
-    public Color turn() {
-        return color;
-    }
+    protected ChessPiece[][] board = new ChessPiece[BoardSize][BoardSize];
+    protected Color[][] colors = new Color[BoardSize][BoardSize];
 
-    private ChessPiece[][] board = new ChessPiece[BoardSize][BoardSize];
-    private Color[][] colors = new Color[BoardSize][BoardSize];
+    protected Cell blackKing = new Cell(4, 7);
+    protected Cell whiteKing = new Cell(4, 0);
 
-    private Cell blackKing = new Cell(4, 7);
-    private Cell whiteKing = new Cell(4, 0);
+    protected List<Move> prevMoves = new ArrayList<>();
 
-    private List<Move> prevMoves = new ArrayList<>();
+    protected List<ChessPiece> prevMovePieces = new ArrayList<>();
 
-    private List<ChessPiece> prevMovePieces = new ArrayList<>();
-
-    private List<Color> prevMoveColor = new ArrayList<>();
+    protected List<Color> prevMoveColor = new ArrayList<>();
 
     public MatrixBoard() {
         for (int i = 0; i < 2; i++) {
@@ -137,7 +133,7 @@ public class MatrixBoard implements Board {
             case KNIGHT -> moves = getKnightValidMoves(cell);
             case QUEEN -> moves = getQueenValidMoves(cell);
             case ROOK -> moves = getRookValidMoves(cell);
-        };
+        }
 
         Color kingColor = color;
 
