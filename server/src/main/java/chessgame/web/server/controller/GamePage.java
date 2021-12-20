@@ -27,7 +27,7 @@ public class GamePage extends Page {
         this.moveService = moveService;
     }
 
-    @GetMapping("GamePage/{id}")
+    @GetMapping("game/{id}")
     public String postPageGet(@PathVariable String id, Model model, HttpSession httpSession) {
         Game game;
         try {
@@ -47,7 +47,7 @@ public class GamePage extends Page {
         model.addAttribute("isFlip", game.getLoginBlack().equals(getUser(httpSession).getLogin()));
         model.addAttribute("FEN", getFEN(board));
 
-        return "GamePage/" + id;
+        return "game/" + id;
     }
 
     @MessageMapping("/sendMove")

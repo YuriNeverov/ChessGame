@@ -13,4 +13,25 @@
             </ul>
         </div>
     </section>
+
+    <div id="myBoard" style="width: 400px"></div>
+    <script>
+        var board = null
+        var game = new Chess()
+        var $status = $('#status')
+        var $fen = $('#fen')
+        var $pgn = $('#pgn')
+
+        var config = {
+            draggable: true,
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd
+        }
+        board = Chessboard('myBoard', config)
+
+        updateStatus()
+    </script>
+
 </@c.page>

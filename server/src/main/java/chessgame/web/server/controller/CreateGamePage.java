@@ -52,6 +52,6 @@ public class CreateGamePage extends Page {
         Game game = gameService.create(gameForm, getUser(httpSession).getLogin());
         putMessage(httpSession, "Congrats, you have created the game!");
 
-        return "GamePage/" + game.getId();
+        return "game/" + game.getId();
     }
 }
