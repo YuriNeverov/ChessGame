@@ -30,6 +30,8 @@ public class Game {
 
     private boolean accepted;
 
+    private boolean gameWithAI;
+
     public long getId() {
         return id;
     }
@@ -76,5 +78,13 @@ public class Game {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public boolean isGameWithAI() {
+        return gameWithAI;
+    }
+
+    public void setGameWithAI(boolean gameWithAI) {
+        this.gameWithAI = gameWithAI;
     }
 }

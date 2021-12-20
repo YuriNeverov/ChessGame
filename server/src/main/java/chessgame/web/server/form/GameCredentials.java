@@ -10,6 +10,8 @@ public class GameCredentials {
 
     private boolean isWhiteColor;
 
+    private boolean gameWithAI;
+
     public String getOpponentLogin() {
         return opponentLogin;
     }
@@ -24,5 +26,13 @@ public class GameCredentials {
 
     public void setIsWhiteColor(boolean isWhiteColor) {
         this.isWhiteColor = isWhiteColor;
+    }
+
+    public boolean isGameWithAI() {
+        return gameWithAI;
+    }
+
+    public void setGameWithAI(boolean gameWithAI) {
+        this.gameWithAI = gameWithAI;
     }
 }
