@@ -46,6 +46,7 @@ public class GamePage extends Page {
 
         model.addAttribute("isFlip", game.getLoginBlack().equals(getUser(httpSession).getLogin()));
         model.addAttribute("FEN", getFEN(board));
+        model.addAttribute("game", game);
 
         return "game/" + id;
     }

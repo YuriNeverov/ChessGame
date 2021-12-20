@@ -26,7 +26,7 @@ public class Game {
     @CreationTimestamp
     private Date creationTime;
 
-    private boolean gameIsOver;
+    private boolean creatorIsWhile;
 
     private boolean accepted;
 
@@ -60,5 +60,21 @@ public class Game {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public boolean isCreatorIsWhile() {
+        return creatorIsWhile;
+    }
+
+    public void setCreatorIsWhile(boolean creatorIsWhile) {
+        this.creatorIsWhile = creatorIsWhile;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }
