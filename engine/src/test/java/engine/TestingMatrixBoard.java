@@ -62,26 +62,7 @@ public class TestingMatrixBoard extends MatrixBoard implements TestingBoard {
 
     @Override
     public String getState() {
-        StringBuilder strBuilder = new StringBuilder();
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                strBuilder.append(String.format("%s ", getBiChar(new Cell(y, 7 - x))));
-            }
-            strBuilder.append("\n");
-        }
-        strBuilder.append(
-            String.format(
-                "White King: (%d, %d), Black King: (%d, %d)\n",
-                whiteKing.x, whiteKing.y, blackKing.x, blackKing.y
-            )
-        );
-        strBuilder.append(
-            String.format(
-                "Current player color: %s\n",
-                color
-            )
-        );
-        return strBuilder.toString();
+        return toString();
     }
 
     @Override
